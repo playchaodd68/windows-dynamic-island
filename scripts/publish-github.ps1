@@ -32,6 +32,9 @@ $git = Resolve-CommandPath git
 $gh = Resolve-CommandPath gh
 
 & $gh auth status | Out-Null
+if ($LASTEXITCODE -ne 0) {
+  throw "GitHub CLI is installed but not authenticated. Run 'gh auth login' before publishing."
+}
 
 $branch = & $git branch --show-current
 if ($branch -ne "feat/windows-dynamic-island") {
@@ -39,7 +42,7 @@ if ($branch -ne "feat/windows-dynamic-island") {
 }
 
 $visibilityFlag = if ($Private) { "--private" } else { "--public" }
-$remoteExists = & $git remote get-url origin 2>$null
+$remoteExists = (& $git remote) -contains "origin"
 
 if (-not $remoteExists) {
   & $gh repo create $RepoName $visibilityFlag --description $Description --source . --remote origin --push
