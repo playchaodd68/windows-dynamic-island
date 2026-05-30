@@ -27,23 +27,24 @@ describe('App', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    expect(screen.getByText('Ready')).toBeInTheDocument();
+    expect(screen.getByText('就绪')).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /expand island/i }));
+    await user.click(screen.getByRole('button', { name: '展开灵动岛' }));
 
-    expect(screen.getByText('Clipboard actions')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /summarize/i })).toBeInTheDocument();
-    expect(screen.getByText('Focus timer')).toBeInTheDocument();
+    expect(screen.getByText('智能剪贴板')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /总结/ })).toBeInTheDocument();
+    expect(screen.getByText('专注计时')).toBeInTheDocument();
+    expect(screen.getByText('快速记录')).toBeInTheDocument();
   });
 
   it('runs a clipboard action and exposes the result', async () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /expand island/i }));
-    await user.click(screen.getByRole('button', { name: /summarize/i }));
+    await user.click(screen.getByRole('button', { name: '展开灵动岛' }));
+    await user.click(screen.getByRole('button', { name: /总结/ }));
 
-    expect(await screen.findByText('Summary ready')).toBeInTheDocument();
+    expect(await screen.findByText('摘要已完成')).toBeInTheDocument();
     expect(screen.getAllByText('Plan the build.').length).toBeGreaterThan(0);
   });
 });

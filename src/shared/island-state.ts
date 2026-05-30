@@ -22,7 +22,7 @@ export type IslandEvent =
 export function createInitialIslandState(): IslandState {
   return {
     mode: 'idle',
-    status: 'Ready',
+    status: '就绪',
     activities: []
   };
 }
@@ -33,19 +33,19 @@ export function islandReducer(state: IslandState, event: IslandEvent): IslandSta
       return {
         ...state,
         mode: state.mode === 'expanded' ? 'idle' : 'expanded',
-        status: state.mode === 'expanded' ? 'Ready' : 'Expanded'
+        status: state.mode === 'expanded' ? '就绪' : '已展开'
       };
     case 'show':
       return {
         ...state,
         mode: state.mode === 'hidden' ? 'idle' : state.mode,
-        status: state.mode === 'hidden' ? 'Ready' : state.status
+        status: state.mode === 'hidden' ? '就绪' : state.status
       };
     case 'hide':
       return {
         ...state,
         mode: 'hidden',
-        status: 'Hidden'
+        status: '已隐藏'
       };
     case 'action-started':
       return {

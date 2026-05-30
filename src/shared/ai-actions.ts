@@ -15,66 +15,66 @@ export interface AiActionResult {
 export const AI_ACTIONS: AiActionDefinition[] = [
   {
     id: 'summarize',
-    label: 'Summarize',
-    description: 'Compress clipboard text into the smallest useful summary.'
+    label: '总结',
+    description: '把剪贴板内容压缩成最有用的摘要。'
   },
   {
     id: 'rewrite',
-    label: 'Rewrite',
-    description: 'Make the clipboard text clearer and more direct.'
+    label: '润色',
+    description: '让剪贴板文字更清晰、更有质感。'
   },
   {
     id: 'translate',
-    label: 'Translate',
-    description: 'Create a concise Chinese translation draft.'
+    label: '翻译',
+    description: '生成简洁的中文翻译草稿。'
   },
   {
     id: 'extractTasks',
-    label: 'Extract tasks',
-    description: 'Turn lines or sentences into a checklist.'
+    label: '提取任务',
+    description: '把文本整理成可执行清单。'
   },
   {
     id: 'formatMarkdown',
-    label: 'Markdown',
-    description: 'Format clipboard text as clean Markdown.'
+    label: '转 Markdown',
+    description: '把文本排版成干净的 Markdown。'
   }
 ];
 
 export async function runMockAiAction(actionId: AiActionId, input: string): Promise<AiActionResult> {
   const text = input.trim();
   if (!text) {
-    throw new Error('Clipboard text is required');
+    throw new Error('需要剪贴板文本');
   }
 
   switch (actionId) {
     case 'summarize':
       return {
         actionId,
-        title: 'Summary',
+        title: '摘要',
         body: firstSentence(text)
       };
     case 'rewrite':
       return {
         actionId,
-        title: 'Rewrite',
-        body: `Clear version: ${normalizeWhitespace(text)}`
+        title: '润色',
+        body: `清晰版：${normalizeWhitespace(text)}`
       };
     case 'translate':
       return {
         actionId,
-        title: 'Chinese translation',
+        title: '翻译',
         body: `中文草稿: ${normalizeWhitespace(text)}`
       };
     case 'extractTasks':
       return {
         actionId,
-        title: 'Tasks',
+        title: '任务清单',
         body: extractTasks(text)
       };
     case 'formatMarkdown':
       return {
         actionId,
-        title: 'Markdown',
+        title: 'Markdown 排版',
         body: `> ${normalizeWhitespace(text)}`
       };
     default:

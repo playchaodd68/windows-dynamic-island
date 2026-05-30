@@ -14,7 +14,7 @@ describe('AI actions', () => {
 
   it('summarizes clipboard text deterministically', async () => {
     await expect(runMockAiAction('summarize', 'First sentence. Second sentence with more detail.')).resolves.toMatchObject({
-      title: 'Summary',
+      title: '摘要',
       body: 'First sentence.'
     });
   });
@@ -28,6 +28,6 @@ describe('AI actions', () => {
   });
 
   it('rejects empty clipboard input', async () => {
-    await expect(runMockAiAction('rewrite', '   ')).rejects.toThrow('Clipboard text is required');
+    await expect(runMockAiAction('rewrite', '   ')).rejects.toThrow('需要剪贴板文本');
   });
 });

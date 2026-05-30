@@ -1,32 +1,34 @@
-# Windows Dynamic Island
+# Windows 灵动岛
 
-A Windows desktop companion inspired by Dynamic Island. It runs as a compact, frameless, always-on-top pill near the top of the screen and expands into a local AI-style utility panel for clipboard actions, focus timers, quick notes, and recent activity.
+一个面向 Windows 的桌面灵动岛助手。它以顶部悬浮胶囊的形态常驻桌面，需要时展开为轻量控制面板，用于剪贴板智能处理、专注计时、快速记录和最近动态查看。
 
-## What It Does
+## 功能
 
-- Shows a compact top-center island with idle, working, success, warning, and expanded states.
-- Expands into a dense desktop utility panel with clipboard actions, timer controls, quick notes, and recent activity.
-- Uses a deterministic local mock AI provider for summarize, rewrite, translate, task extraction, and Markdown formatting.
-- Reads and writes clipboard text only when the user triggers an action.
-- Provides Electron tray controls and global shortcuts.
+- 顶部居中的无边框悬浮胶囊窗口。
+- 空闲、处理中、完成、警告、展开等明确状态。
+- iOS 灵动岛风格的深色玻璃、弹性展开、光晕和按压反馈。
+- 全中文界面和托盘菜单。
+- 本地模拟 AI 动作：总结、润色、翻译、提取任务、转 Markdown。
+- 专注计时、快速记录、最近动态和结果复制。
+- Electron 托盘控制和全局快捷键。
 
-## Privacy Defaults
+## 隐私默认值
 
-The first implementation does not send clipboard content to any remote service. AI-style actions run through the local mock provider. A future OpenAI provider can be added behind the provider interface when explicit API-key configuration is available.
+当前版本不会把剪贴板内容发送到远程服务。所有智能动作都通过本地模拟 provider 返回确定性结果。后续接入 OpenAI provider 时，应继续保留显式配置和 provider 边界。
 
-## Shortcuts
+## 快捷键
 
-- `Ctrl+Shift+Space`: show or hide the island.
-- `Ctrl+Shift+I`: show and expand the island.
+- `Ctrl+Shift+Space`：显示或隐藏灵动岛。
+- `Ctrl+Shift+I`：显示并展开灵动岛。
 
-## Development
+## 本地开发
 
 ```powershell
 npm install
 npm run dev
 ```
 
-## Verification
+## 验证
 
 ```powershell
 npm run validate:openspec
@@ -36,26 +38,26 @@ npm run build
 npm run smoke
 ```
 
-Or run the combined gate:
+或运行完整检查：
 
 ```powershell
 npm run check
 ```
 
-## Publishing to GitHub
+## 发布到 GitHub
 
-After installing and authenticating GitHub CLI, publish the repo and open the draft PR:
+安装并登录 GitHub CLI 后，运行：
 
 ```powershell
 gh auth login
 .\scripts\publish-github.ps1
 ```
 
-## Project Structure
+## 项目结构
 
-- `src/main`: Electron main process, native window, tray, shortcuts, and IPC.
-- `src/preload`: Typed renderer bridge for clipboard and shell controls.
-- `src/renderer`: React island UI.
-- `src/shared`: Testable domain logic for states, AI actions, timers, and activity.
-- `src/tests`: Vitest tests for shared behavior and renderer behavior.
-- `openspec`: OpenSpec proposal, design, specs, and tasks.
+- `src/main`：Electron 主进程、原生窗口、托盘、快捷键和 IPC。
+- `src/preload`：渲染进程桥接 API。
+- `src/renderer`：React 灵动岛界面。
+- `src/shared`：状态、AI 动作、计时器和动态列表等可测试领域逻辑。
+- `src/tests`：Vitest 单元和组件测试。
+- `openspec`：OpenSpec proposal、design、specs 和 tasks。

@@ -16,7 +16,7 @@ export function createTimer(): FocusTimer {
 
 export function startTimer(timer: FocusTimer, durationSeconds: number): FocusTimer {
   if (durationSeconds <= 0) {
-    throw new Error('Timer duration must be positive');
+    throw new Error('计时时长必须大于 0');
   }
 
   return {

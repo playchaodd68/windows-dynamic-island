@@ -7,14 +7,14 @@ describe('activity helpers', () => {
 
     expect(note).toMatchObject({
       kind: 'note',
-      title: 'Quick note',
+      title: '快速记录',
       body: 'Capture this',
       createdAt: 42
     });
   });
 
   it('rejects empty notes', () => {
-    expect(() => createNoteActivity('   ', 42)).toThrow('Note text is required');
+    expect(() => createNoteActivity('   ', 42)).toThrow('请输入记录内容');
   });
 
   it('keeps recent activity newest first within a display limit', () => {

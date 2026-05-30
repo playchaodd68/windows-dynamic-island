@@ -62,7 +62,7 @@ export function App() {
       return;
     }
 
-    dispatch({ type: 'action-succeeded', message: 'Timer complete' });
+    dispatch({ type: 'action-succeeded', message: '计时完成' });
   }, [timer.status]);
 
   function toggleExpanded() {
@@ -73,14 +73,14 @@ export function App() {
   }
 
   async function runClipboardAction(actionId: AiActionId) {
-    dispatch({ type: 'action-started', label: 'Working' });
+    dispatch({ type: 'action-started', label: '处理中' });
 
     try {
       const clipboardText = await bridge.clipboard.readText();
       const result = await runMockAiAction(actionId, clipboardText);
       setLatestResult(result);
       setPanelOpen(true);
-      dispatch({ type: 'action-succeeded', message: `${result.title} ready`, result: result.body });
+      dispatch({ type: 'action-succeeded', message: `${result.title}已完成`, result: result.body });
       dispatch({
         type: 'activity-added',
         activity: createActivity('ai', result.title, result.body)
@@ -88,7 +88,7 @@ export function App() {
     } catch (error) {
       dispatch({
         type: 'action-failed',
-        message: error instanceof Error ? error.message : 'Action failed'
+        message: error instanceof Error ? error.message : '操作失败'
       });
     }
   }
@@ -97,19 +97,19 @@ export function App() {
     try {
       const activity = createNoteActivity(note);
       dispatch({ type: 'activity-added', activity });
-      dispatch({ type: 'action-succeeded', message: 'Note saved', result: activity.body });
+      dispatch({ type: 'action-succeeded', message: '记录已保存', result: activity.body });
       setNote('');
     } catch (error) {
       dispatch({
         type: 'action-failed',
-        message: error instanceof Error ? error.message : 'Note failed'
+        message: error instanceof Error ? error.message : '记录失败'
       });
     }
   }
 
   function startPresetTimer(durationSeconds: number) {
     setTimer((current) => startTimer(current, durationSeconds));
-    dispatch({ type: 'action-started', label: 'Timer running' });
+    dispatch({ type: 'action-started', label: '计时中' });
   }
 
   async function copyLatestResult() {
@@ -117,31 +117,33 @@ export function App() {
       return;
     }
     await bridge.clipboard.writeText(latestResult.body);
-    dispatch({ type: 'action-succeeded', message: 'Copied result', result: latestResult.body });
+    dispatch({ type: 'action-succeeded', message: '已复制结果', result: latestResult.body });
   }
 
   return (
     <main className={`app-root mode-${state.mode} ${panelOpen ? 'is-expanded' : ''}`}>
-      <section className="island-shell" aria-label="Windows Dynamic Island">
+      <section className="island-shell" aria-label="Windows 灵动岛">
         <div className="compact-pill">
+          <div className="pill-sheen" aria-hidden="true" />
           <div className="orb" aria-hidden="true">
             <Sparkles size={18} />
           </div>
           <div className="status-copy">
-            <span className="eyebrow">Windows Island</span>
+            <span className="eyebrow">灵动岛</span>
             <strong>{state.status}</strong>
           </div>
-          <button className="icon-button" type="button" aria-label="Expand island" onClick={toggleExpanded}>
+          <button className="icon-button" type="button" aria-label={panelOpen ? '收起灵动岛' : '展开灵动岛'} onClick={toggleExpanded}>
             {panelOpen ? <Minimize2 size={18} /> : <Sparkles size={18} />}
           </button>
         </div>
 
         {panelOpen ? (
           <div className="activity-panel">
+            <div className="panel-glow" aria-hidden="true" />
             <div className="panel-header">
               <div>
-                <p className="section-kicker">Mock provider</p>
-                <h1>Clipboard actions</h1>
+                <p className="section-kicker">本地智能</p>
+                <h1>智能剪贴板</h1>
               </div>
               <span className="version-chip">v{version}</span>
             </div>
@@ -151,6 +153,7 @@ export function App() {
                 <button className="action-card" type="button" key={action.id} onClick={() => void runClipboardAction(action.id)}>
                   {actionIcons[action.id]}
                   <span>{action.label}</span>
+                  <small>{action.description}</small>
                 </button>
               ))}
             </div>
@@ -158,21 +161,21 @@ export function App() {
             <section className="utility-card">
               <div className="card-title">
                 <Clock3 size={16} />
-                <span>Focus timer</span>
+                <span>专注计时</span>
               </div>
               <div className="timer-readout">{formatRemaining(timer.remainingSeconds)}</div>
               <div className="segmented-actions">
                 <button type="button" onClick={() => startPresetTimer(300)}>
-                  5m
+                  5 分钟
                 </button>
                 <button type="button" onClick={() => startPresetTimer(1500)}>
-                  25m
+                  25 分钟
                 </button>
                 <button type="button" onClick={() => setTimer((current) => (current.status === 'paused' ? resumeTimer(current) : pauseTimer(current)))}>
-                  {timer.status === 'paused' ? 'Resume' : 'Pause'}
+                  {timer.status === 'paused' ? '继续' : '暂停'}
                 </button>
                 <button type="button" onClick={() => setTimer((current) => resetTimer(current))}>
-                  Reset
+                  重置
                 </button>
               </div>
             </section>
@@ -180,11 +183,11 @@ export function App() {
             <section className="utility-card note-card">
               <div className="card-title">
                 <PenLine size={16} />
-                <span>Quick note</span>
+                <span>快速记录</span>
               </div>
-              <textarea value={note} onChange={(event) => setNote(event.target.value)} placeholder="Capture a thought without opening another app" />
+              <textarea value={note} onChange={(event) => setNote(event.target.value)} placeholder="不打断当前工作，先记下一句话" />
               <button className="primary-button" type="button" onClick={saveNote}>
-                Save note
+                保存记录
               </button>
             </section>
 
@@ -194,7 +197,7 @@ export function App() {
                   <p className="section-kicker">{latestResult.title}</p>
                   <p>{latestResult.body}</p>
                 </div>
-                <button className="icon-button" type="button" aria-label="Copy result" onClick={() => void copyLatestResult()}>
+                <button className="icon-button" type="button" aria-label="复制结果" onClick={() => void copyLatestResult()}>
                   <Copy size={17} />
                 </button>
               </section>
@@ -203,7 +206,7 @@ export function App() {
             <section className="activity-list">
               <div className="card-title">
                 <Check size={16} />
-                <span>Recent activity</span>
+                <span>最近动态</span>
               </div>
               {activities.length > 0 ? (
                 activities.map((activity) => (
@@ -213,16 +216,16 @@ export function App() {
                   </article>
                 ))
               ) : (
-                <p className="empty-state">No recent activity yet.</p>
+                <p className="empty-state">暂无动态。</p>
               )}
             </section>
 
             <footer className="settings-strip">
               <span>Ctrl+Shift+Space</span>
-              <span>Local mock AI</span>
+              <span>本地模拟 AI</span>
               <button type="button" onClick={() => void bridge.shell.hide()}>
                 <EyeOff size={14} />
-                Hide
+                隐藏
               </button>
             </footer>
           </div>

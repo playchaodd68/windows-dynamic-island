@@ -75,14 +75,14 @@ function createTray(): Tray {
   );
 
   const appTray = new Tray(icon);
-  appTray.setToolTip('Windows Dynamic Island');
+  appTray.setToolTip('Windows 灵动岛');
   appTray.setContextMenu(
     Menu.buildFromTemplate([
-      { label: 'Show island', click: () => mainWindow?.show() },
-      { label: 'Hide island', click: () => mainWindow?.hide() },
-      { label: 'Expand island', click: () => setIslandSize(EXPANDED_SIZE) },
+      { label: '显示灵动岛', click: () => mainWindow?.show() },
+      { label: '隐藏灵动岛', click: () => mainWindow?.hide() },
+      { label: '展开灵动岛', click: () => setIslandSize(EXPANDED_SIZE) },
       { type: 'separator' },
-      { label: 'Quit', click: () => app.quit() }
+      { label: '退出', click: () => app.quit() }
     ])
   );
 
@@ -120,7 +120,7 @@ function registerShortcuts(): void {
   });
 }
 
-app.setName('Windows Dynamic Island');
+app.setName('Windows 灵动岛');
 
 void app.whenReady().then(() => {
   registerIpc();

@@ -14,7 +14,7 @@ describe('focus timer', () => {
   });
 
   it('rejects non-positive durations', () => {
-    expect(() => startTimer(createTimer(), 0)).toThrow('Timer duration must be positive');
+    expect(() => startTimer(createTimer(), 0)).toThrow('计时时长必须大于 0');
   });
 
   it('resets to idle state', () => {

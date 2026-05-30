@@ -20,13 +20,13 @@ describe('islandReducer', () => {
   it('moves through working, success, warning, and hidden states', () => {
     const initial = createInitialIslandState();
     const working = islandReducer(initial, { type: 'action-started', label: 'Summarizing' });
-    const success = islandReducer(working, { type: 'action-succeeded', message: 'Summary ready' });
-    const warning = islandReducer(success, { type: 'action-failed', message: 'Clipboard is empty' });
+    const success = islandReducer(working, { type: 'action-succeeded', message: '摘要已完成' });
+    const warning = islandReducer(success, { type: 'action-failed', message: '剪贴板没有内容' });
     const hidden = islandReducer(warning, { type: 'hide' });
 
     expect(working).toMatchObject({ mode: 'working', status: 'Summarizing' });
-    expect(success).toMatchObject({ mode: 'success', status: 'Summary ready' });
-    expect(warning).toMatchObject({ mode: 'warning', status: 'Clipboard is empty' });
+    expect(success).toMatchObject({ mode: 'success', status: '摘要已完成' });
+    expect(warning).toMatchObject({ mode: 'warning', status: '剪贴板没有内容' });
     expect(hidden.mode).toBe('hidden');
   });
 });

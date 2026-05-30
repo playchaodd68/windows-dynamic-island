@@ -15,13 +15,13 @@ export function addActivity(items: ActivityItem[], activity: ActivityItem, limit
 export function createNoteActivity(text: string, createdAt = Date.now()): ActivityItem {
   const body = text.trim();
   if (!body) {
-    throw new Error('Note text is required');
+    throw new Error('请输入记录内容');
   }
 
   return {
     id: `note-${createdAt}-${body.length}`,
     kind: 'note',
-    title: 'Quick note',
+    title: '快速记录',
     body,
     createdAt
   };
