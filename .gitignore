@@ -1,0 +1,11 @@
+node_modules/
+dist/
+dist-electron/
+coverage/
+.vite/
+*.log
+.env
+.env.*
+!.env.example
+outputs/
+work/
