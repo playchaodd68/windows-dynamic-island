@@ -45,11 +45,11 @@ $visibilityFlag = if ($Private) { "--private" } else { "--public" }
 $remoteExists = (& $git remote) -contains "origin"
 
 if (-not $remoteExists) {
-  & $gh repo create $RepoName $visibilityFlag --description $Description --source . --remote origin --push
-} else {
-  & $git push -u origin main
-  & $git push -u origin $branch
+  & $gh repo create $RepoName $visibilityFlag --description $Description --source . --remote origin
 }
+
+& $git push -u origin main
+& $git push -u origin $branch
 
 $prBodyPath = Join-Path $PSScriptRoot "pr-body.md"
 & $gh pr create `
