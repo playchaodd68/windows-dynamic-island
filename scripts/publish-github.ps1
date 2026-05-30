@@ -6,35 +6,50 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-function Require-Command {
+function Resolve-CommandPath {
   param([string]$Name)
-  if (-not (Get-Command $Name -ErrorAction SilentlyContinue)) {
-    throw "Required command '$Name' was not found. Install GitHub CLI and run 'gh auth login' first."
+  $command = Get-Command $Name -ErrorAction SilentlyContinue
+  if ($command) {
+    return $command.Source
   }
+
+  if ($Name -eq "gh") {
+    $candidates = @(
+      "$env:ProgramFiles\GitHub CLI\gh.exe",
+      "$env:LOCALAPPDATA\Programs\GitHub CLI\gh.exe"
+    )
+    foreach ($candidate in $candidates) {
+      if (Test-Path $candidate) {
+        return $candidate
+      }
+    }
+  }
+
+  throw "Required command '$Name' was not found. Install GitHub CLI and run 'gh auth login' first."
 }
 
-Require-Command git
-Require-Command gh
+$git = Resolve-CommandPath git
+$gh = Resolve-CommandPath gh
 
-gh auth status | Out-Null
+& $gh auth status | Out-Null
 
-$branch = git branch --show-current
+$branch = & $git branch --show-current
 if ($branch -ne "feat/windows-dynamic-island") {
   throw "Expected branch 'feat/windows-dynamic-island', got '$branch'."
 }
 
 $visibilityFlag = if ($Private) { "--private" } else { "--public" }
-$remoteExists = git remote get-url origin 2>$null
+$remoteExists = & $git remote get-url origin 2>$null
 
 if (-not $remoteExists) {
-  gh repo create $RepoName $visibilityFlag --description $Description --source . --remote origin --push
+  & $gh repo create $RepoName $visibilityFlag --description $Description --source . --remote origin --push
 } else {
-  git push -u origin main
-  git push -u origin $branch
+  & $git push -u origin main
+  & $git push -u origin $branch
 }
 
 $prBodyPath = Join-Path $PSScriptRoot "pr-body.md"
-gh pr create `
+& $gh pr create `
   --draft `
   --base main `
   --head $branch `
