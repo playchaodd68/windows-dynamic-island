@@ -1,0 +1,302 @@
+:root {
+  font-family: "Aptos", "Segoe UI Variable", "Segoe UI", sans-serif;
+  color: #f6f8fb;
+  background: transparent;
+  font-synthesis: none;
+  text-rendering: geometricPrecision;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  background: transparent;
+  overflow: hidden;
+}
+
+button,
+textarea {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+.app-root {
+  width: 100vw;
+  min-height: 100vh;
+  display: grid;
+  place-items: start center;
+  padding: 0;
+  background: transparent;
+}
+
+.island-shell {
+  width: min(430px, 100vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.compact-pill {
+  width: 360px;
+  height: 68px;
+  display: grid;
+  grid-template-columns: 42px 1fr 42px;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.04)),
+    rgba(7, 9, 14, 0.94);
+  box-shadow:
+    0 22px 48px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(18px);
+  -webkit-app-region: drag;
+}
+
+.mode-working .compact-pill {
+  border-color: rgba(97, 244, 255, 0.52);
+}
+
+.mode-success .compact-pill {
+  border-color: rgba(105, 255, 169, 0.45);
+}
+
+.mode-warning .compact-pill {
+  border-color: rgba(255, 194, 87, 0.55);
+}
+
+.orb {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, #ffffff, #61f4ff 35%, #1c5cff 75%),
+    #61f4ff;
+  color: #061116;
+  box-shadow: 0 0 28px rgba(97, 244, 255, 0.42);
+}
+
+.status-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.status-copy strong,
+.status-copy span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.eyebrow,
+.section-kicker {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.2;
+  color: #95a0b8;
+  text-transform: uppercase;
+}
+
+.status-copy strong {
+  font-size: 15px;
+  line-height: 1.15;
+}
+
+.icon-button,
+.action-card,
+.primary-button,
+.segmented-actions button,
+.settings-strip button {
+  border: 0;
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+}
+
+.icon-button {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.icon-button:hover,
+.action-card:hover,
+.primary-button:hover,
+.segmented-actions button:hover,
+.settings-strip button:hover {
+  background: rgba(97, 244, 255, 0.16);
+}
+
+.activity-panel {
+  width: 430px;
+  max-height: calc(100vh - 78px);
+  overflow: hidden auto;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 28px;
+  background:
+    linear-gradient(165deg, rgba(23, 29, 42, 0.97), rgba(9, 11, 18, 0.98)),
+    rgba(8, 10, 16, 0.96);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.52);
+}
+
+.panel-header,
+.result-card,
+.settings-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.panel-header h1 {
+  margin: 2px 0 0;
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.version-chip,
+.settings-strip span {
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #c6cee1;
+  font-size: 12px;
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.action-card {
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.07);
+  text-align: left;
+}
+
+.utility-card,
+.result-card,
+.activity-list {
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #dfe6f7;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.timer-readout {
+  margin: 12px 0;
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.segmented-actions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.segmented-actions button,
+.primary-button,
+.settings-strip button {
+  min-height: 34px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.note-card textarea {
+  width: 100%;
+  min-height: 74px;
+  margin: 12px 0 10px;
+  resize: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 10px;
+  color: #f6f8fb;
+  background: rgba(0, 0, 0, 0.24);
+}
+
+.primary-button {
+  width: 100%;
+  background: #61f4ff;
+  color: #071015;
+  font-weight: 800;
+}
+
+.result-card {
+  border: 1px solid rgba(97, 244, 255, 0.26);
+}
+
+.result-card p {
+  margin: 4px 0 0;
+  color: #f3f7ff;
+  line-height: 1.45;
+}
+
+.activity-list article {
+  display: grid;
+  gap: 2px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.activity-list article:last-child {
+  border-bottom: 0;
+}
+
+.activity-list span,
+.empty-state {
+  color: #aeb8d1;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.settings-strip {
+  margin-top: 12px;
+  color: #aeb8d1;
+  font-size: 12px;
+}
+
+.settings-strip button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+}

@@ -1,0 +1,57 @@
+{
+  "name": "windows-dynamic-island",
+  "version": "0.1.0",
+  "description": "A Windows Dynamic Island desktop companion for AI-style clipboard actions and focus utilities.",
+  "private": true,
+  "main": "dist-electron/main/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "run-s build:electron dev:app",
+    "dev:app": "run-p dev:renderer dev:electron",
+    "dev:renderer": "vite --host 127.0.0.1",
+    "dev:electron": "wait-on http://127.0.0.1:5173 && cross-env VITE_DEV_SERVER_URL=http://127.0.0.1:5173 electron .",
+    "build:renderer": "vite build",
+    "build:electron": "tsc -p tsconfig.electron.json",
+    "build": "run-s typecheck build:electron build:renderer",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.electron.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "preview": "run-s build preview:electron",
+    "preview:electron": "electron .",
+    "smoke": "run-s build smoke:electron",
+    "smoke:electron": "cross-env WDI_SMOKE_EXIT=1 electron .",
+    "validate:openspec": "npx @fission-ai/openspec validate windows-dynamic-island --strict",
+    "check": "run-s validate:openspec typecheck test build smoke:electron"
+  },
+  "keywords": [
+    "electron",
+    "windows",
+    "dynamic-island",
+    "ai"
+  ],
+  "author": "Codex",
+  "license": "MIT",
+  "dependencies": {
+    "lucide-react": "^1.17.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^25.9.1",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
+    "concurrently": "^10.0.0",
+    "cross-env": "^10.1.0",
+    "electron": "^42.3.0",
+    "jsdom": "^29.1.1",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.14",
+    "vitest": "^4.1.7",
+    "wait-on": "^9.0.10"
+  }
+}
