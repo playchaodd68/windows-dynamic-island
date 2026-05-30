@@ -42,6 +42,15 @@ Or run the combined gate:
 npm run check
 ```
 
+## Publishing to GitHub
+
+After installing and authenticating GitHub CLI, publish the repo and open the draft PR:
+
+```powershell
+gh auth login
+.\scripts\publish-github.ps1
+```
+
 ## Project Structure
 
 - `src/main`: Electron main process, native window, tray, shortcuts, and IPC.
